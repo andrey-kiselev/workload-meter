@@ -24,7 +24,7 @@ using System.IO;
 
 namespace WorkloadMeter {
 
-	public class SecondaryTaskManager : MonoBehaviour {
+	public class WorkloadTaskManager : MonoBehaviour {
 
 		[Header("Tasks")]
 		[Tooltip("Offset from the start of the script, after which to start measurements.")]
