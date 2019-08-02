@@ -4,11 +4,11 @@ The mathematical tasks are based on the Montreal Imaging Stress Test algorithms.
 
 ## Licensing
 
-This software is provided under GNU GPL v3 license conditions.
+This software is provided under GNU GENERAL PUBLIC LICENSE Version 3 license conditions. See LICENSE file for details.
 
 ## Pre-requesites
 
-Please, make sure you are running on Windows and you have Windows Speech enabled and configured. 
+This package was only tested on Windows x64 platform. Please, make sure you have Windows Speech enabled and configured.
 
 ## Installation
 
