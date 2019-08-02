@@ -1,5 +1,5 @@
-# WorkloadMeter
-WorkloadMeter is a Unity3D asset to measure user's mental workload at runtime by using a secondary mathematical task and verbal feedback.
+# Workload Meter
+Workload Meter is a Unity3D asset to measure user's mental workload at runtime by using a secondary mathematical task and verbal feedback.
 The mathematical tasks are based on the Montreal Imaging Stress Test algorithms. The tasks are presented to the user on the overlay in the bottom of the viewport. The tasks are generated in the way that the correct answer is always a single digit from zero to nine. The responses are collected using keyword spotting.
 
 ## Licensing
