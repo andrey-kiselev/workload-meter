@@ -24,99 +24,112 @@ using UnityEngine;
 namespace WorkloadMeter {
 
 	/**
-	* Task is a pair of string and int, where:
-	* - Text is what is displayed on screen, and
-	* - Answer is a digit to be recognized.
-	*/
+	 * Task is a pair of string and int, where:
+	 * - Text is what is displayed on screen, and
+	 * - Answer is a digit to be recognized.
+	 */
 	public class Task {
 		public string Text = "0+0";
 		public int Answer = 0;
 	}
 
+	/**
+	 * Class to generate math tasks.
+	 * Must be instantiated to get consistent Random.
+	 */
 	public class MathTaskGenerator {
-		private System.Random RND = new System.Random();
 
-		public Task GetTask (int dif) {
-			
+		// instantiate Random with a system clock seed value
+		private System.Random m_random = new System.Random();
+
+		/**
+		 * Get new task of givel difficulty level. 
+		 * If type is not 0, then return the task of the specifies type.
+		 * 
+		 */
+		public Task GetTask (int difficulty, int type = 0, int ans = 10) {
+
 			int taskType;
-			switch (dif){
-			case 1:
-				taskType = RND.Next(1, 2 + 1);
-				break;
-			case 2:
-				taskType = RND.Next(1, 4 + 1);
-				break;
-			case 3:
-				taskType = RND.Next(1, 7 + 1);
-				break;
-			default:
-				taskType = RND.Next(1, 7 + 1);
-				break;
+			if(type == 0){
+				// pre-generate a type of the task based on difficulty
+				switch (difficulty){
+				case 1:
+					taskType = m_random.Next(1, 2 + 1);
+					break;
+				case 2:
+					taskType = m_random.Next(1, 4 + 1);
+					break;
+				// case 3:
+				// 	taskType = m_random.Next(1, 7 + 1);
+				// 	break;
+				default:
+					taskType = m_random.Next(1, 4 + 1);
+					break;
+				}
+			} else {
+				taskType = type;
 			}
 
-			int answer;
+			// declare the answer
+			int answer = ans;
 
-			Pair pair = new Pair();
 			Task task = new Task();
+			Pair ab_c = new Pair();
+			Pair a_b = new Pair();
 
 			switch (taskType) {
 				case 1: // "a + b = c", c >= 2
-					answer = RND.Next(2, 10);
-					pair = m_getSum(answer);
-					task.Text = pair.a + "+" + pair.b;
+					if (ans >= 10) {
+						answer = m_random.Next(2, 10);
+					}
+					a_b = m_getSum(answer);
+					task.Text = a_b.a + "+" + a_b.b;
 					break;
 				case 2: // "a - b = c", c <= 8
-					if (dif <= 2) {
-						answer = RND.Next(9);
-						pair = m_getSimpleSub(answer);
+					if (difficulty <= 2) {
+						if (ans >= 10) {
+							answer = m_random.Next(9);
+						}
+						a_b = m_getSimpleSub(answer);
 					} else {
-						answer = RND.Next(10);
-						pair = m_getSub(answer);
+						if (ans >= 10) {
+							answer = m_random.Next(10);
+						}
+						a_b = m_getSub(answer);
 					}
-					task.Text = pair.a + "-" + pair.b;
+					task.Text = a_b.a + "-" + a_b.b;
 					break;
 				case 3: // "a + b - c = d"
-					Pair pair1 = new Pair();
-					if (dif <= 2) {
-						answer = RND.Next(9);
-						pair1 = m_getSimpleSub(answer, 2);
+					if (difficulty <= 2) {
+						if (ans >= 10) {
+							answer = m_random.Next(9);
+						}
+						a_b = m_getSimpleSub(answer, 2);
 					} else {
-						answer = RND.Next(10);
-						pair1 = m_getSub(answer, 2);
+						if (ans >= 10) {
+							answer = m_random.Next(10);
+						}
+						a_b = m_getSub(answer, 2);
 					}
-					pair = m_getSum(pair1.a);
-					task.Text = pair.a + "+" + pair.b + "-" + pair1.b;
+					ab_c = m_getSum(a_b.a);
+					task.Text = ab_c.a + "+" + ab_c.b + "-" + a_b.b;
 					break;
 				case 4: // "a - b - c = d"
-					Pair pair2 = new Pair();
-					if (dif <= 2) {
-						answer = RND.Next(9);
-						pair2 = m_getSimpleSub(answer, 0, 8);
-						pair = m_getSimpleSub(pair2.a);
+					if (difficulty <= 2) {
+						if (ans >= 10) {
+							answer = m_random.Next(8); //0..8
+						}
+						a_b = m_getSimpleSub(answer, 1, 8);
+						ab_c = m_getSimpleSub(a_b.a);
 					} else {
-						answer = RND.Next(10);
-						pair2 = m_getSub(answer);
-						pair = m_getSub(pair2.a);
+						if (ans >= 10) {
+							answer = m_random.Next(10);
+						}
+						a_b = m_getSub(answer);
+						ab_c = m_getSub(a_b.a);
 					}
-					task.Text = pair.a + "-" + pair.b + "-" + pair2.b;
+					task.Text = ab_c.a + "-" + ab_c.b + "-" + a_b.b;
 					break;
-				//case 5: // "a x b = d"
-				//	answer = RND.Next(1, 10);
-				//	pair = m_getMul(answer);
-				//	task.Text = pair.a + "*" + pair.b;
-				// 	break;
-				//case 6: // "a x b + c = d"
-				//	answer = RND.Next(2, 10);
-				//	Pair pair3 = m_getSum(answer);
-				//	pair = m_getMul(pair3.a);
-				//	task.Text = pair.a + "*" + pair.b + "+" + pair3.b;
-				// 	break;
-				//case 7: // "a x b - c = d"
-				//	answer = RND.Next(10);
-				//	Pair pair4 = m_getSub(answer);
-				//	pair = m_getMul(pair4.a);
-				//	task.Text = pair.a + "*" + pair.b + "-" + pair4.b;
-				// 	break;
 				default:
 					answer = 0;
 					task.Text = "0+0";
@@ -137,7 +150,7 @@ namespace WorkloadMeter {
 		// c should be GREATER OR EQUAL than 2
 		private Pair m_getSum(int c) {
 			Pair p = new Pair();
-			p.a = RND.Next(1, c);
+			p.a = m_random.Next(1, c);
 			p.b = c - p.a;
 			return p;
 		}
@@ -146,22 +159,18 @@ namespace WorkloadMeter {
 		// c must be LESS than 99
 		private Pair m_getSub(int c, int min_a = 1) {
 			Pair p = new Pair();
-			p.a = RND.Next(Math.Max(min_a, c + 1), 99 + 1);
+			p.a = m_random.Next(Math.Max(min_a, c + 1), 99 + 1);
 			p.b = p.a - c;
 			return p;
 		}
 
-		// finds integer a and b such as a - b = c, and a and b are less than 10
+		// finds integers a and b such as a - b = c, and a and b are less than 10
 		// c should be less than 8, otherwize getSub will be used
 		private Pair m_getSimpleSub(int c, int min_a = 1, int max_a = 9) {
-			if (c < 9) {
-				Pair p = new Pair();
-				p.a = RND.Next(Math.Max(min_a, c + 1), Math.Min(max_a + 1, 9 + 1));
-				p.b = p.a - c;
-				return p;
-			} else {
-				return m_getSub(c);
-			}
+			Pair p = new Pair();
+			p.a = m_random.Next(Math.Max(min_a, c + 1), Math.Min(max_a + 1, 9 + 1));
+			p.b = p.a - c;
+			return p;
 		}
 	}
 }

@@ -1,0 +1,10 @@
+{
+    "name": "WorkloadMeterTests",
+    "references": [],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true
+}
