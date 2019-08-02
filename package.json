@@ -1,0 +1,8 @@
+{
+    "name": "se.oru.aass.workload-meter",
+    "displayName": "Workload Meter",
+    "version": "0.1.1",
+    "unity": "2018.1",
+    "description": "Package for measuring workload using secondary math task and verbal feedback.",
+	"keywords": ["Workload"]
+}
