@@ -22,7 +22,7 @@ using System;
 using UnityEngine.Windows.Speech;
 using System.IO;
 
-namespace SecondaryTask {
+namespace WorkloadMeter {
 
 	public class SecondaryTaskManager : MonoBehaviour {
 
