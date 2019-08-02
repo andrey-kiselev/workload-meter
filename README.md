@@ -20,8 +20,6 @@ Please, make sure you are running on Windows and you have Windows Speech enabled
 5. Set the layer of the SecondaryTaskManager to SecondaryTask, including children.
 6. Enjoy.
 
-You can always check an ExampleScene in the SecondaryTaskRunner folder for reference.
-
 ## Usage
 
 The main setting for the workload measurement is the task difficulty in combination with task duration. Currently, only difficulty levels 1 and 2 are implemented. You may need to adjust keywords and feedback texts if you speech recognition language is not US English. Saving log file is disabled by default, you must both, tick the Save Log box and specify log file path to save data.
