@@ -1,6 +1,6 @@
 ﻿/**
  * Workload meter in VR using secondary math task.
- * Copyright (C) 2019 Andrey Kiselev (andrey.kiselev@oru.se)
+ * Copyright (C) 2020 Andrey Kiselev (andrey.kiselev@oru.se)
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
